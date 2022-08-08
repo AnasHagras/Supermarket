@@ -1,0 +1,11 @@
+github link >> https://github.com/AnasHagras/Supermarket.git
+Updates >> 
+- added invoice crud 
+- added receipt crud 
+- cash done (without validation)
+- invoiceProduct done 
+
+Next >>
+- validation 
+- show invoice products in a table beside invoice details (in invoice.show)
+- show receipt products and company in a table beside receipt details (in receipt.show) ** not now
