@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,24 +44,31 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $products = $request['data'];
-        $totalPrice = ($request['totalPrice']);
+        $totalPrice = $request['totalPrice'];
         $itemCount = $request['itemCount'];
-        // return response()->json(['msg'=>$totalPrice]);
+        if ($itemCount == 0) {
+            return response()->json(['msg' => "Empty Invoice", 'status' => 201]);
+        }
         $invoiceID = Invoice::create([
             'invoicePrice' => $totalPrice,
             'itemCounter' => $itemCount,
             'userID' => Auth::user()->userID
         ])->invoiceID;
-        foreach($products as $product){ 
+        foreach ($products as $product) {
             InvoiceProduct::create([
                 'itemTotalPrice' => $product['itemTotalPrice'],
                 'itemCounter' => $product['count'],
                 'invoiceID' => $invoiceID,
-                'barcode' => $product['barcode']
+                'barcode' => $product['barcode'],
+                'sellingPrice' => $product['sellingPrice']
+            ]);
+            $currentProduct = Product::where('barcode', $product['barcode'])->first();
+            $currentProduct->update([
+                'stock' => $currentProduct['stock'] - $product['count']
             ]);
         }
         // return redirect()->route("cashier.index")->with('msg','added successfully');
-        return response()->json(['msg'=>"added successfully",'status'=>200]);
+        return response()->json(['msg' => "added successfully", 'status' => 200]);
     }
 
     /**
@@ -72,11 +80,21 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $data = Invoice::where('invoiceID', $id)->first();
-        $products = InvoiceProduct::where('invoiceID',$id)->get();
-        $userID = invoice::where('invoiceID',$id)->first()['userID'];
-        $username = User::where('userID',$userID)->first()['name'];
-        return view('invoice.show', ['data' => $data,'products'=>$products
-        ,'username'=>$username,'userID'=>$userID]);
+        $productInovice = InvoiceProduct::where('invoiceID', $id)->get();
+        $products = [];
+        foreach ($productInovice as $product) {
+            $item = Product::where("barcode", $product['barcode'])->first();
+            $item['itemCounter'] = $product['itemCounter'];
+            $item['itemTotalPrice'] = $product['itemTotalPrice'];
+            $products[] = $item;
+        }
+        // print_r($products);
+        // die();
+        $userID = invoice::where('invoiceID', $id)->first()['userID'];
+        $username = User::where('userID', $userID)->first()['name'];
+        return view('invoice.show', [
+            'data' => $data, 'products' => $products, 'username' => $username, 'userID' => $userID
+        ]);
     }
 
     /**
@@ -99,7 +117,6 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        
     }
 
     /**

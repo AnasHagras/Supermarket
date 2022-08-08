@@ -34,7 +34,9 @@ Route::get('/dashboard', function () {
     return view('mydashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::resource('cashier', CashierController::class)->middleware(['auth']);
+
+Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('catagory', CatagoryController::class);
     Route::resource('company', CompanyController::class);
@@ -44,7 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('invoice_product', InvoiceController::class);
     Route::resource('receipt', ReceiptController::class);
     Route::resource('user', UserController::class);
-    Route::resource('cashier', CashierController::class);
     Route::post('ajaxRequest', [AjaxController::class, 'getProduct']);
 });
 

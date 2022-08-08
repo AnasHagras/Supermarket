@@ -18,7 +18,8 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <label for="catagoryName">Name</label>
-                                    <input type="text" class="form-control" id="catagoryName" name="catagoryName" placeholder="Category Name" value='{{ $data->catagoryName }}'>
+                                    <input type="text" class="form-control" id="catagoryName" name="catagoryName" placeholder="Category Name" value='{{old('catagoryName',$data->catagoryName) }}'>
+                                    <small  class="form-text" style="color: red">{{$errors->first('catagoryName')}}</small>
                                 </div>
 
 

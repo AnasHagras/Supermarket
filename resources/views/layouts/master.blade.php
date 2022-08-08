@@ -132,7 +132,7 @@
                     </a>
                     <div class="collapse" id="invoice">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('invoice.create') }}">Add Invoice</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('cashier.index') }}">Add Invoice</a></li>
                             <li class="nav-item"> <a class="nav-link" href="{{ route('invoice.index') }}">All Invoices</a></li>
                         </ul>
                     </div>

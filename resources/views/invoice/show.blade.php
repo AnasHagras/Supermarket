@@ -16,7 +16,7 @@
             <h3 class="page-title"> Invoice Info </h3>
         </div>
         <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -56,6 +56,43 @@
                                     <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product Barcode</th>
+                                        <th>Product Name</th>
+                                        <th>Count</th>
+                                        <th>Unit Price</th>
+                                        <th>Total Price</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($products as $item)
+                                    <tr>
+                                        <td>{{$item->barcode}}</td>
+                                        <td>{{$item->productName}}</td>
+                                        <td>{{$item->itemCounter}}</td>
+                                        <td>{{$item->sellingPrice}}</td>
+                                        <td>{{$item->itemTotalPrice	}}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td align="center" colspan="3">No Data</td>
+                                    </tr>
+                                    @endforelse
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

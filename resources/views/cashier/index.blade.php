@@ -5,9 +5,9 @@
 <style>
     a {
         text-decoration: none;
-        color: white;
+        color: black;
     }
-
+    
     a:hover {
         color: white;
     }
@@ -106,18 +106,14 @@
                     updateAll();
                     document.querySelector("input[name=barcode]").value = "";
                     document.querySelector("input[name=count]").value = "";
-                    document.querySelector(".msg").innerHTML = response['msg'];
-                    document.querySelector(".msg").classList.remove("alert-danger");
-                    document.querySelector(".msg").classList.add("alert-success");
-                    document.querySelector(".msg").classList.add("active");
+                    showSuccessMessage(response['msg']);
+                } else {
+                    showErrorMessage(response['msg']);
                 }
             },
             error: function(error) {
-                document.querySelector(".msg").innerHTML = "Empty!";
-                document.querySelector(".msg").classList.remove("alert-success");
-                document.querySelector(".msg").classList.add("alert-danger");
-                document.querySelector(".msg").classList.add("active");
-                
+                showErrorMessage("Internal Error!");
+
             }
         });
     });
@@ -125,7 +121,8 @@
         // console.log("F");
         e.preventDefault();
         let barcode = $("input[name=barcode]").val();
-        let count = $("input[name=count]").val();
+        let initialCount = $("input[name=count]").val();
+        let count = getCurrentCount(barcode, parseInt($("input[name=count]").val()));
         // let currentPrice = $("input[name=price]").val();
         let _token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
@@ -137,51 +134,18 @@
                 _token: _token
             },
             success: function(response) {
-                if (response) {
-                    const product = JSON.parse(response);
+                if (response['status'] == 200) {
+                    const product = JSON.parse(response['product']);
                     if (!itemExists(product['barcode'], count, product['sellingPrice'])) {
-                        const tr = document.createElement("tr");
-                        const barcodeTD = document.createElement("td");
-                        const productNameTD = document.createElement("td");
-                        const priceTD = document.createElement("td");
-                        const countTD = document.createElement("td");
-                        const totalTD = document.createElement("td");
-                        const removeTD = document.createElement("td");
-                        barcodeTD.setAttribute("name", 'barcode');
-                        barcodeTD.setAttribute("value", barcode);
-                        productNameTD.setAttribute("name", "productName");
-                        productNameTD.setAttribute("value", product['productName']);
-                        priceTD.setAttribute("name", "price");
-                        priceTD.setAttribute("value", product['sellingPrice']);
-                        countTD.setAttribute("name", "count");
-                        countTD.setAttribute("value", count);
-                        totalTD.setAttribute("name", "total");
-                        totalTD.setAttribute("value", product['sellingPrice'] * count);
-                        barcodeTD.innerText = product['barcode'];
-                        productNameTD.innerText = product['productName'];
-                        priceTD.innerText = product['sellingPrice'];
-                        countTD.innerText = count;
-                        totalTD.innerText = product['sellingPrice'] * count;
-                        removeTD.innerText = "Remove";
-                        removeTD.setAttribute("value", product['barcode']);
-                        removeTD.classList.add("removeButton");
-                        removeTD.addEventListener('click', function(e) {
-                            removeFromTable(this.getAttribute("value"));
-                        });
-                        tr.appendChild(barcodeTD);
-                        tr.appendChild(productNameTD);
-                        tr.appendChild(priceTD);
-                        tr.appendChild(countTD);
-                        tr.appendChild(totalTD);
-                        tr.appendChild(removeTD);
-                        tbody.appendChild(tr);
-                        // convertTrToArray(tbody);
+                        addItem(product, barcode, count);
+                    } else {
+                        updateItem(barcode, initialCount, product['sellingPrice']);
                     }
                     updateAll();
-                    // console.log(product);
-                    // get the json file and convert it to array 
-                    // add that product and count to the table 
-                    // update the total price 
+                    removeMessage();
+                } else {
+                    showErrorMessage(response['msg']);
+                    // will be one of these >> cannot be null >> barcode not found >> count is not available
                 }
             },
             error: function(error) {
@@ -189,6 +153,63 @@
             }
         });
     });
+    
+    function removeMessage(){
+        document.querySelector(".msg").innerHTML = "";
+        document.querySelector(".msg").classList.remove("active");
+    }
+
+    function showSuccessMessage(message) {
+        document.querySelector(".msg").innerHTML = message;
+        document.querySelector(".msg").classList.add("alert-success");
+        document.querySelector(".msg").classList.remove("alert-danger");
+        document.querySelector(".msg").classList.add("active");
+    }
+
+    function showErrorMessage(message) {
+        document.querySelector(".msg").innerHTML = message;
+        document.querySelector(".msg").classList.remove("alert-success");
+        document.querySelector(".msg").classList.add("alert-danger");
+        document.querySelector(".msg").classList.add("active");
+    }
+
+    function addItem(product, barcode, count) {
+        const tr = document.createElement("tr");
+        const barcodeTD = document.createElement("td");
+        const productNameTD = document.createElement("td");
+        const priceTD = document.createElement("td");
+        const countTD = document.createElement("td");
+        const totalTD = document.createElement("td");
+        const removeTD = document.createElement("td");
+        barcodeTD.setAttribute("name", 'barcode');
+        barcodeTD.setAttribute("value", barcode);
+        productNameTD.setAttribute("name", "productName");
+        productNameTD.setAttribute("value", product['productName']);
+        priceTD.setAttribute("name", "price");
+        priceTD.setAttribute("value", product['sellingPrice']);
+        countTD.setAttribute("name", "count");
+        countTD.setAttribute("value", count);
+        totalTD.setAttribute("name", "total");
+        totalTD.setAttribute("value", product['sellingPrice'] * count);
+        barcodeTD.innerText = product['barcode'];
+        productNameTD.innerText = product['productName'];
+        priceTD.innerText = product['sellingPrice'];
+        countTD.innerText = count;
+        totalTD.innerText = product['sellingPrice'] * count;
+        removeTD.innerText = "Remove";
+        removeTD.setAttribute("value", product['barcode']);
+        removeTD.classList.add("removeButton");
+        removeTD.addEventListener('click', function(e) {
+            removeFromTable(this.getAttribute("value"));
+        });
+        tr.appendChild(barcodeTD);
+        tr.appendChild(productNameTD);
+        tr.appendChild(priceTD);
+        tr.appendChild(countTD);
+        tr.appendChild(totalTD);
+        tr.appendChild(removeTD);
+        tbody.appendChild(tr);
+    }
 
     function convertTrToArray() {
         $trs = tbody.querySelectorAll("tr");
@@ -211,20 +232,42 @@
         return $products;
     }
 
-    function itemExists(barcode, count, sellingPrice) {
+    function itemExists(barcode) {
         state = false;
         $trs = tbody.querySelectorAll("tr");
         [...$trs].forEach(function($tr) {
             $barcode = $tr.querySelector("[name=barcode]").getAttribute("value");
             if (barcode == $barcode) {
                 state = true;
-                $tr.querySelector("[name=count]").innerText = parseInt($tr.querySelector("[name=count]").getAttribute("value")) + parseInt(count);
-                $tr.querySelector("[name=count]").setAttribute("value", parseInt($tr.querySelector("[name=count]").getAttribute("value")) + parseInt(count));
-                $tr.querySelector("[name=total]").setAttribute("value", parseInt($tr.querySelector("[name=count]").getAttribute("value")) * sellingPrice);
-                $tr.querySelector("[name=total]").innerText = parseInt($tr.querySelector("[name=count]").getAttribute("value")) * sellingPrice;
+
             }
         });
         return state;
+    }
+
+    function updateItem(barcode, count, sellingPrice) {
+        $tr = getTr(barcode);
+        $tr.querySelector("[name=count]").innerText = parseInt($tr.querySelector("[name=count]").getAttribute("value")) + parseInt(count);
+        $tr.querySelector("[name=count]").setAttribute("value", parseInt($tr.querySelector("[name=count]").getAttribute("value")) + parseInt(count));
+        $tr.querySelector("[name=total]").setAttribute("value", parseInt($tr.querySelector("[name=count]").getAttribute("value")) * sellingPrice);
+        $tr.querySelector("[name=total]").innerText = parseInt($tr.querySelector("[name=count]").getAttribute("value")) * sellingPrice;
+    }
+
+    function getCurrentCount(barcode, count) {
+        if (itemExists(barcode)) {
+            return itemCount(getTr(barcode)) + count;
+        } else {
+            return count;
+        }
+    }
+
+    function getTr(barcode) {
+        barcodee = barcode.toString();
+        return tbody.querySelector(`tr td[value="${barcodee}"]`).parentElement;
+    }
+
+    function itemCount($tr) {
+        return parseInt($tr.querySelector("[name=count]").getAttribute("value"));
     }
 
     function updateTotal() {
@@ -240,7 +283,7 @@
         $count = 0;
         $trs = tbody.querySelectorAll("tr");
         [...$trs].forEach(function($tr) {
-            $count += parseInt($tr.querySelector("[name=count]").getAttribute("value"));
+            $count += itemCount($tr);
         });
         cc.innerText = $count;
     }
@@ -251,7 +294,6 @@
     }
 
     function removeFromTable(barcode) {
-        $trs = tbody.querySelectorAll("tr");
         barcodee = barcode.toString();
         tbody.removeChild(tbody.querySelector(`tr td[value="${barcodee}"]`).parentElement);
         updateAll();

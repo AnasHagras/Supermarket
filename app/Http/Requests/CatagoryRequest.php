@@ -13,7 +13,7 @@ class CatagoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,9 @@ class CatagoryRequest extends FormRequest
      */
     public function rules()
     {
+        $id = request()->route('catagory');
         return [
-            //
+            'catagoryName' => 'required|unique:catagories,catagoryName,' . $id . ',catagoryID' . '|regex:/^[a-zA-Z]+$/u',
         ];
     }
 }

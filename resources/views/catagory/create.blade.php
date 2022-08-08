@@ -16,7 +16,8 @@
 
                                 <div class="form-group">
                                     <label for="catagoryName">Name</label>
-                                    <input type="txt" class="form-control" name="catagoryName" id="catagoryName" placeholder="Category Name">
+                                    <input value="{{old('catagoryName')}}" type="txt" class="form-control" name="catagoryName" id="catagoryName" placeholder="Category Name">
+                                    <small  class="form-text" style="color: red">{{$errors->first('catagoryName')}}</small>
                                 </div>
                                 <button type="submit" value="save" name="save" class="btn btn-primary me-2">Submit</button>
                             </form>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CatagoryRequest;
 use App\Models\Catagory;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -35,8 +36,12 @@ class CatagoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CatagoryRequest $request)
     {
+        $validator = $request->validated();
+        if (!empty($validator->errors)) {
+            return back()->withErrors($validator)->withInput();
+        }
         Catagory::create([
             'catagoryName' => $request->catagoryName,
         ]);
@@ -76,8 +81,12 @@ class CatagoryController extends Controller
      * @param  \App\Models\Catagory  $catagory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CatagoryRequest $request, $id)
     {
+        $validator = $request->validated();
+        if (!empty($validator->errors)) {
+            return back()->withErrors($validator)->withInput();
+        }
         $catagory = Catagory::where('catagoryID', $id)->first();
         $catagory->update([
             'catagoryName' => $request->catagoryName,

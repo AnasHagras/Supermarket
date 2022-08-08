@@ -42,16 +42,17 @@
                                     <select style="color: white"  class="form-control" name="isAdmin" id="role" placeholder="">
                                         <option @if ($data->isAdmin == '0')
                                                 @selected(true)
-                                        @endif value="0">User</option>
+                                        @endif value='0'>User</option>
                                         <option @if ($data->isAdmin == '1')
                                                 @selected(true)
-                                        @endif value="1">Admin</option>
+                                        @endif value='1'>Admin</option>
                                     </select>
                                     <small  class="form-text" style="color: red">{{$errors->first('isAdmin')}}</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="role">Employee</label>
                                     <select style="color: white"  class="form-control" name="employeeID" id="employeeID" placeholder="">
+                                        <option value="">None</option>
                                         @foreach($employees as $employee)
                                             <option @if ($data->employeeID == $employee->employeeID || old('employeeID') ==  $employee->employeeID)
                                                     @selected(true)

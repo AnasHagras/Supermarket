@@ -38,9 +38,9 @@
                                 <div class="form-group">
                                     <label for="role">Role</label>
                                     <select style="color: white"  class="form-control" name="isAdmin" id="role" placeholder="">
-                                        <option value="" disabled selected>Select Role</option>
-                                        <option value="0">User</option>
-                                        <option value="1">Admin</option>
+                                        <option  disabled selected>Select Role</option>
+                                        <option value='0'>User</option>
+                                        <option value='1'>Admin</option>
                                     </select>
                                     <small  class="form-text" style="color: red">{{$errors->first('isAdmin')}}</small>
                                 </div>
