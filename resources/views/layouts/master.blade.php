@@ -1,4 +1,12 @@
 @include('layouts.header')
+<style>
+    input:focus,select:focus{
+        color: green !important;
+    }
+    select{
+        color: white !important;
+    }
+</style>
 
 <body>
     <div class="container-scroller">
@@ -137,6 +145,36 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#incoming" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-laptop"></i>
+                        </span>
+                        <span class="menu-title">Incomings</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="incoming">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('incoming.create') }}">Add Incoming</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('incoming.index') }}">All Incomings</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#outgoing" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-laptop"></i>
+                        </span>
+                        <span class="menu-title">Outgoings</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="outgoing">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('outgoing.create') }}">Add Outgoing</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('outgoing.index') }}">All Outgoings</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </nav>
         <div class="container-fluid page-body-wrapper">
@@ -152,7 +190,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                                 <div class="navbar-profile">
-                                    <img class="img-xs rounded-circle" src="../../assets/images/faces/face.jpg" alt="">
+                                    <!-- <img class="img-xs rounded-circle" src="../../assets/images/faces/face.jpg" alt=""> -->
                                     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::user()->name }} </p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>
@@ -160,10 +198,11 @@
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                                 <h6 class="p-3 mb-0">Profile</h6>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
+                                <a class="dropdown-item preview-item" href="{{ route('user.edit',Auth::user()->userID) }}">
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-settings text-success"></i>
+                                            
                                         </div>
                                     </div>
                                     <div class="preview-item-content">

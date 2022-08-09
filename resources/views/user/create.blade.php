@@ -53,7 +53,6 @@
                                         @empty
                                             <option value=""disabled selected>No Employees</option>
                                         @endforelse
-
                                     </select>
                                     <small  class="form-text" style="color: red">{{$errors->first('employeeID')}}</small>
                                 </div>

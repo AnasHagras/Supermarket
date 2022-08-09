@@ -47,7 +47,18 @@ return new class extends Migration
             $table->foreign('receiptID')->references('receiptID')->on('receipts')->onUpdate('cascade')->onDelete('cascade');
             $table->index(['receiptID','barcode','companyID']);
         });
-        
+        Schema::table('incomings',function (Blueprint $table){
+            $table->unsignedBigInteger('userID')->nullable();
+            $table->foreign('userID')->references('userID')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('invoiceID')->nullable();
+            $table->foreign('invoiceID')->references('invoiceID')->on('invoices')->onUpdate('cascade')->onDelete('cascade');
+        });
+        Schema::table('outgoings',function (Blueprint $table){
+            $table->unsignedBigInteger('userID')->nullable();
+            $table->foreign('userID')->references('userID')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('receiptID')->nullable();
+            $table->foreign('receiptID')->references('receiptID')->on('receipts')->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**

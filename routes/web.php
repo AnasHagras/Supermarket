@@ -11,8 +11,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\AjaxController;
-
-
+use App\Http\Controllers\IncomingController;
+use App\Http\Controllers\OutgoingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +46,8 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('invoice_product', InvoiceController::class);
     Route::resource('receipt', ReceiptController::class);
     Route::resource('user', UserController::class);
+    Route::resource('incoming', IncomingController::class);
+    Route::resource('outgoing', OutgoingController::class);
     Route::post('ajaxRequest', [AjaxController::class, 'getProduct']);
 });
 

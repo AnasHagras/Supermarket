@@ -12,7 +12,7 @@
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="page-header">
-            <h3 class="page-title"> Users </h3>
+            <h3 class="page-title"> Incomings </h3>
         </div>
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -26,20 +26,22 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>UserID</th>
-                                        <th>Username</th>
+                                        <th>IncomingID</th>
+                                        <th>Cost</th>
+                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $user)
+                                    @forelse($data as $incoming)
                                     <tr>
-                                        <td>{{$user->userID}}</td>
-                                        <td>{{$user->username}}</td>
+                                        <td>{{$incoming->incomingID}}</td>
+                                        <td>{{$incoming->cost}}</td>
+                                        <td>{{$incoming->desc}}</td>
                                         <td>
-                                            <label class="badge badge-success"><a href="{{ route('user.show',$user->userID) }}">Show</a></label>
-                                            <label class="btn btn-primary"><a href="{{ route('user.edit',$user->userID) }}">Edit</a></label>
-                                            <form action= "{{route('user.destroy',$user->userID)}}" method="POST" style="display:inline">
+                                            <label class="badge badge-success"><a href="{{ route('incoming.show',$incoming->incomingID) }}">Show</a></label>
+                                            <label class="btn btn-primary"><a href="{{ route('incoming.edit',$incoming->incomingID) }}">Edit</a></label>
+                                            <form action= "{{route('incoming.destroy',$incoming->incomingID)}}" method="POST" style="display:inline">
                                                 @csrf
                                                 @method("DELETE")
                                                 <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
