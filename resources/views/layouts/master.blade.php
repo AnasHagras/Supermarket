@@ -148,7 +148,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#incoming" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-cash-usd"></i>
                         </span>
                         <span class="menu-title">Incomings</span>
                         <i class="menu-arrow"></i>
@@ -163,7 +163,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#outgoing" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-arrow-top-right"></i>
                         </span>
                         <span class="menu-title">Outgoings</span>
                         <i class="menu-arrow"></i>
@@ -202,7 +202,7 @@
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-settings text-success"></i>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
