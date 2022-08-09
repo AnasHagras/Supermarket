@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Incoming;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
@@ -67,6 +68,13 @@ class InvoiceController extends Controller
                 'stock' => $currentProduct['stock'] - $product['count']
             ]);
         }
+        Incoming::create([
+            'desc' => "invoice income",
+            'reason' => "Order",
+            'cost' => $totalPrice,
+            'userID' => Auth::user()->userID,
+            'invoiceID' => $invoiceID
+        ]);
         // return redirect()->route("cashier.index")->with('msg','added successfully');
         return response()->json(['msg' => "added successfully", 'status' => 200]);
     }
@@ -88,8 +96,6 @@ class InvoiceController extends Controller
             $item['itemTotalPrice'] = $product['itemTotalPrice'];
             $products[] = $item;
         }
-        // print_r($products);
-        // die();
         $userID = invoice::where('invoiceID', $id)->first()['userID'];
         $username = User::where('userID', $userID)->first()['name'];
         return view('invoice.show', [

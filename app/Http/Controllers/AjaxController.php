@@ -10,8 +10,6 @@ class AjaxController extends Controller
 {
     public function getProduct(Request $request)
     {
-        // return  $request->barcode;
-        // die();
         $barcode = $request['barcode'];
         $count = $request['count'];
         // check if any of them if null 
