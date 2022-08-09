@@ -14,7 +14,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="menu-icon">
-                            <i class="mdi mdi-speedometer"></i>
+                            <i class="mdi mdi-view-dashboard"></i>
                         </span>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -22,7 +22,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="{{ route('cashier.index') }}">
                         <span class="menu-icon">
-                            <i class="mdi mdi-speedometer"></i>
+                            <i class="mdi mdi-cart"></i>
                         </span>
                         <span class="menu-title">Cashier</span>
                     </a>
@@ -30,7 +30,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#emp" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-account-multiple"></i>
                         </span>
                         <span class="menu-title">Employees</span>
                         <i class="menu-arrow"></i>
@@ -45,7 +45,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-account-circle"></i>
                         </span>
                         <span class="menu-title">Users</span>
                         <i class="menu-arrow"></i>
@@ -62,7 +62,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#productt" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-dropbox"></i>
                         </span>
                         <span class="menu-title">Products</span>
                         <i class="menu-arrow"></i>
@@ -78,7 +78,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-animation"></i>
                         </span>
                         <span class="menu-title">Categories</span>
                         <i class="menu-arrow"></i>
@@ -94,7 +94,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#company" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-bank"></i>
                         </span>
                         <span class="menu-title">Companies</span>
                         <i class="menu-arrow"></i>
@@ -110,7 +110,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#receipt" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-pencil-box"></i>
                         </span>
                         <span class="menu-title">Receipts</span>
                         <i class="menu-arrow"></i>
@@ -125,7 +125,7 @@
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-bs-toggle="collapse" href="#invoice" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-note-text"></i>
                         </span>
                         <span class="menu-title">Invoices</span>
                         <i class="menu-arrow"></i>
