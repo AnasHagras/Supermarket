@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IncomingRequest;
 use App\Models\Outgoing;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OutgoingController extends Controller
@@ -15,7 +17,7 @@ class OutgoingController extends Controller
     public function index()
     {
         $data = Outgoing::all();
-        return view("incoming.index",['data'=>$data]);
+        return view("outgoing.index", ['data' => $data]);
     }
 
     /**
@@ -25,7 +27,8 @@ class OutgoingController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        return view('outgoing.create', ['users' => $users]);
     }
 
     /**
@@ -34,9 +37,19 @@ class OutgoingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IncomingRequest $request)
     {
-        //
+        $validator = $request->validated();
+        if (!empty($validator->errors)) {
+            return back()->withErrors($validator)->withInput();
+        }
+        Outgoing::create([
+            'desc' => $request->desc,
+            'reason' => $request->reason,
+            'userID' => $request->userID,
+            'cost' => $request->cost,
+        ]);
+        return redirect()->route('outgoing.index')->with('msg', 'added successfully');
     }
 
     /**
@@ -45,9 +58,11 @@ class OutgoingController extends Controller
      * @param  \App\Models\Outgoing  $outgoing
      * @return \Illuminate\Http\Response
      */
-    public function show(Outgoing $outgoing)
+    public function show($id)
     {
-        //
+        $data = Outgoing::where('outgoingID', $id)->first();
+        $username = User::where('userID', $data['userID'])->first()['username'];
+        return view("outgoing.show", ['username' => $username, 'data' => $data]);
     }
 
     /**
@@ -79,8 +94,10 @@ class OutgoingController extends Controller
      * @param  \App\Models\Outgoing  $outgoing
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Outgoing $outgoing)
+    public function destroy($id)
     {
-        //
+        $incoming = Outgoing::where('outgoingID', $id);
+        $incoming->delete();
+        return redirect()->route('outgoing.index')->with('msg', 'deleted successfully');
     }
 }
