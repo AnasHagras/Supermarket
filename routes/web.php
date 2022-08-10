@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\OutgoingController;
 
@@ -30,12 +31,12 @@ Route::get('/', function () {
     return view('auth.register');
 });
 
-Route::get('/dashboard', function () {
-    return view('mydashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('mydashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 Route::resource('cashier', CashierController::class)->middleware(['auth']);
-
+Route::resource('dashboard', DashboardController::class)->middleware(['auth']);
 Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('catagory', CatagoryController::class);
