@@ -142,7 +142,7 @@
                 }
             },
             error: function(error) {
-                // console.log(error);
+                console.log(error);
                 showErrorMessage("Internal Error!");
 
             }

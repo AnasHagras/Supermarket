@@ -53,8 +53,8 @@ class InvoiceController extends Controller
         // check stock for each item if one of item stock is less than item count return with message 
         foreach($products as $product){
             $currentProduct = Product::where('barcode',$product['barcode'])->first();
-            if(null===$currentProduct)
-                return response()->json(['msg' =>"Product $product->productName not available <a href = 'product/create' target='_blank'> Add Product</a>", 'status' => 201]);
+            if(null==$currentProduct)
+                return response()->json(['msg' =>"Product $product[barcode] not available <a href = 'product/create' target='_blank'> Add Product</a>", 'status' => 201]);
             $currentStock = $currentProduct['stock'];
             if($currentStock < $product['count']){
                 $name = $product['productName'];
