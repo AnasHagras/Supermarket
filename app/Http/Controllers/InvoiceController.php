@@ -14,6 +14,18 @@ use Ramsey\Uuid\Type\Integer;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware only applied to these methods
+        $this->middleware('access', [
+            'only' => [
+                'update',
+                'store',
+                'edit',
+                'destroy'
+            ]
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +62,7 @@ class InvoiceController extends Controller
         if ($itemCount == 0) {
             return response()->json(['msg' => "Empty Invoice", 'status' => 201]);
         }
-        // check stock for each item if one of item stock is less than item count return with message 
+        // check stock for each item if one of item stock is less than item count return with message
         foreach($products as $product){
             $currentProduct = Product::where('barcode',$product['barcode'])->first();
             if(null==$currentProduct)

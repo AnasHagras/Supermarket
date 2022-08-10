@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware only applied to these methods
+        $this->middleware('access', [
+            'only' => [
+                'update',
+                'store',
+                'edit',
+                'destroy'
+            ]
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

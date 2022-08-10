@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 class IncomingController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware only applied to these methods
+        $this->middleware('access', [
+            'only' => [
+                'update',
+                'store',
+                'edit',
+                'destroy'
+            ]
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -95,7 +107,7 @@ class IncomingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {  
+    {
         $incoming = Incoming::where('incomingID', $id);
         $incoming->delete();
         return redirect()->route('incoming.index')->with('msg', 'deleted successfully');

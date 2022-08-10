@@ -35,22 +35,25 @@ Route::get('/', function () {
 //     return view('mydashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-Route::resource('cashier', CashierController::class)->middleware(['auth']);
-Route::resource('dashboard', DashboardController::class)->middleware(['auth']);
-Route::resource('receipt', ReceiptController::class)->middleware(['auth']);
-Route::middleware(['auth', 'access'])->group(function () {
-    Route::resource('employee', EmployeeController::class);
+
+Route::middleware(['auth'])->group(function () {
     Route::resource('catagory', CatagoryController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('invoice', InvoiceController::class);
     Route::resource('product', ProductController::class);
     Route::resource('product_receipt_company', ProductReceiptCompanyController::class);
     Route::resource('invoice_product', InvoiceController::class);
-
-    Route::resource('user', UserController::class);
     Route::resource('incoming', IncomingController::class);
     Route::resource('outgoing', OutgoingController::class);
     Route::post('ajaxRequest', [AjaxController::class, 'getProduct']);
+    Route::resource('cashier', CashierController::class);
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('receipt', ReceiptController::class);
+});
+
+Route::middleware(['auth', 'access'])->group(function () {
+    Route::resource('employee', EmployeeController::class);
+    Route::resource('user', UserController::class);
     // Route::put('ajaxRequest', [AjaxController::class, 'saveInvoiceItemToSession']);
 });
 

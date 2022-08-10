@@ -15,6 +15,18 @@ use Ramsey\Uuid\Type\Integer;
 
 class ReceiptController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware only applied to these methods
+        $this->middleware('access', [
+            'only' => [
+                'update',
+                'store',
+                'edit',
+                'destroy'
+            ]
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +67,7 @@ class ReceiptController extends Controller
         if ($itemCount == 0) {
             return response()->json(['msg' => "Empty Invoice", 'status' => 201]);
         }
-        // check existance for each product 
+        // check existance for each product
         foreach ($products as $product) {
             $currentProduct = Product::where('barcode',$product['barcode'])->first();
             if(null==$currentProduct)
