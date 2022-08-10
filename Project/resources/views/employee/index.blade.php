@@ -87,7 +87,6 @@
                 _token: $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                console.log(response['status']);
                 if (response['status'] == 200) {
                     employees = JSON.parse(response['employees']);
                     document.querySelector("tbody").innerHTML = "";
@@ -101,13 +100,19 @@
                         lastNameTD.innerHTML = employee['lastName'];
                         IDTD.innerHTML = employee['employeeID'];
                         actionTD.innerHTML = `
-                        <label class="badge badge-success"><a href="{{ route('employee.show',$employee->employeeID) }}">Show</a></label>
-                        <label class="btn btn-primary"><a href="{{ route('employee.edit',$employee->employeeID) }}">Edit</a></label>
-                        <form action="{{route('employee.destroy',$employee->employeeID)}}" method="POST" style="display:inline">
+                        <label class="badge badge-success show"><a href="">Show</a></label>
+                        <label class="btn btn-primary edit"><a href="">Edit</a></label>
+                        <form class="delete" action="" method="POST" style="display:inline">
                         @csrf
                         @method("DELETE")
                         <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
                         </form>`;
+                        $showLink = actionTD.querySelector(".show a");
+                        $editLink = actionTD.querySelector(".edit a");
+                        $deleteLink = actionTD.querySelector(".delete");
+                        $showLink.setAttribute("href",`http://localhost:8000/employee/${employee['employeeID']}`);
+                        $editLink.setAttribute("href",`http://localhost:8000/employee/${employee['employeeID']}/edit`);
+                        $deleteLink.setAttribute("action",`http://localhost:8000/employee/${employee['employeeID']}`);
                         tr.appendChild(IDTD);
                         tr.appendChild(firstNameTD);
                         tr.appendChild(lastNameTD);
