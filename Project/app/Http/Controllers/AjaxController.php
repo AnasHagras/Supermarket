@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catagory;
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -80,7 +81,7 @@ class AjaxController extends Controller
             return response()->json(['status' => 200, 'invoices' => $invoices]);
         } else if ($request['type'] == '9') {
             $searchText = $request['searchText'];
-            $catagories = Catagory::where('catagoryID',  $searchText)->get();
+            $catagories = Catagory::where('catagoryName', 'like', '%' . $searchText . '%')->get();
             if ($catagories->count() == 0) {
                 return response()->json(['status' => 201, 'msg' => 'no matching records']);
             }
@@ -102,6 +103,14 @@ class AjaxController extends Controller
             }
             $receipts = json_encode($receipts);
             return response()->json(['status' => 200, 'receipts' => $receipts]);
+        }else if($request['type']=='12'){
+            $searchText = $request['searchText'];
+            $companies = Company::where('companyName', 'like', '%' . $searchText . '%')->get();
+            if ($companies->count() == 0) {
+                return response()->json(['status' => 201, 'msg' => 'no matching records']);
+            }
+            $companies = json_encode($companies);
+            return response()->json(['status' => 200, 'companies' => $companies]);
         }
     }
 }

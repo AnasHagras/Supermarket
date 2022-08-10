@@ -107,16 +107,16 @@
                         @method("DELETE")
                         <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
                         </form>`;
-                        $showLink = actionTD.querySelector(".show a");
                         $editLink = actionTD.querySelector(".edit a");
                         $deleteLink = actionTD.querySelector(".delete");
+                        $showLink = actionTD.querySelector(".show a");
                         $showLink.setAttribute("href",`http://localhost:8000/employee/${employee['employeeID']}`);
                         $editLink.setAttribute("href",`http://localhost:8000/employee/${employee['employeeID']}/edit`);
                         $deleteLink.setAttribute("action",`http://localhost:8000/employee/${employee['employeeID']}`);
                         tr.appendChild(IDTD);
                         tr.appendChild(firstNameTD);
                         tr.appendChild(lastNameTD);
-                        //tr.appendChild(actionTD);
+                        tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });
                 } else {

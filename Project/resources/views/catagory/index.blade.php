@@ -24,7 +24,7 @@
                         <form style="display: flex;" method="POST" action="" class="searchForm" autocomplete='off'>
                             @csrf
                             <div class="form-group" style="margin-right:10px">
-                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Category ID" style="margin-right:10px !important">
+                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Category Name" style="margin-right:10px !important">
                             </div>
                             <button type="submit" value="save" name="save" class="submitButton btn btn-primary me-2" style="padding: 10px !important; height:fit-content">Search</button>
                         </form>
@@ -95,10 +95,23 @@
                         actionTD = document.createElement("td");
                         catagoryIDTD.innerHTML = catagory['catagoryID'];
                         catagoryNameTD.innerHTML = catagory['catagoryName'];
-
+                        actionTD.innerHTML = `
+                        <label class="badge badge-success show"><a href="">Show</a></label>
+                        <label class="btn btn-primary edit"><a href="">Edit</a></label>
+                        <form class="delete" action="" method="POST" style="display:inline">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
+                        </form>`;
+                        $editLink = actionTD.querySelector(".edit a");
+                        $deleteLink = actionTD.querySelector(".delete");
+                        $showLink = actionTD.querySelector(".show a");
+                        $showLink.setAttribute("href",`http://localhost:8000/catagory/${catagory['catagoryID']}`);
+                        $editLink.setAttribute("href",`http://localhost:8000/catagory/${catagory['catagoryID']}/edit`);
+                        $deleteLink.setAttribute("action",`http://localhost:8000/catagory/${catagory['catagoryID']}`);
                         tr.appendChild(catagoryIDTD);
                         tr.appendChild(catagoryNameTD);
-                        //tr.appendChild(actionTD);
+                        tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });
                 } else {

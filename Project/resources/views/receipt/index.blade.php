@@ -103,11 +103,22 @@
                         receiptsPriceTD.innerHTML = receipt['receiptPrice'];
                         totatItemsTD.innerHTML = receipt['itemCounter'];
                         dateTD.innerHTML = receipt['receiptDate'];
-
+                        actionTD.innerHTML = `
+                        <label class="badge badge-success show"><a href="">Show</a></label>
+                        <form class="delete" action="" method="POST" style="display:inline">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
+                        </form>`;
+                        $deleteLink = actionTD.querySelector(".delete");
+                        $showLink = actionTD.querySelector(".show a");
+                        $showLink.setAttribute("href", `http://localhost:8000/receipt/${receipt['receiptID']}`);
+                        $deleteLink.setAttribute("action", `http://localhost:8000/receipt/${receipt['receiptID']}`);
                         tr.appendChild(receiptsIDTD);
                         tr.appendChild(receiptsPriceTD);
                         tr.appendChild(totatItemsTD);
                         tr.appendChild(dateTD);
+                        tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });
                 } else {

@@ -97,9 +97,23 @@
                         actionTD = document.createElement("td");
                         userIDTD.innerHTML = user['userID'];
                         usernameTD.innerHTML = user['username'];
-
+                        actionTD.innerHTML = `
+                        <label class="badge badge-success show"><a href="">Show</a></label>
+                        <label class="btn btn-primary edit"><a href="">Edit</a></label>
+                        <form class="delete" action="" method="POST" style="display:inline">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
+                        </form>`;
+                        $editLink = actionTD.querySelector(".edit a");
+                        $deleteLink = actionTD.querySelector(".delete");
+                        $showLink = actionTD.querySelector(".show a");
+                        $showLink.setAttribute("href",`http://localhost:8000/user/${user['userID']}`);
+                        $editLink.setAttribute("href",`http://localhost:8000/user/${user['userID']}/edit`);
+                        $deleteLink.setAttribute("action",`http://localhost:8000/user/${user['userID']}`);
                         tr.appendChild(userIDTD);
                         tr.appendChild(usernameTD);
+                        tr.appendChild(actionTD);
                         //tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });

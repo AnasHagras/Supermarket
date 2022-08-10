@@ -44,11 +44,11 @@
                                     </tr>
                                     <tr>
                                         <th>Catagory</th>
-                                        <td>{{$data->catagoryName}}</td>
+                                        <td><a href="{{route('catagory.show',$data->catagoryID)}}">{{$data->catagoryName}}</a></td>
                                     </tr>
                                     <tr>
                                         <th>Company</th>
-                                        <td>{{$data->companyName}}</td>
+                                        <td><a href="{{route('company.show',$data->companyID)}}">{{$data->companyName}}</a></td>
                                     </tr>
                                 </thead>
                                 <tbody>

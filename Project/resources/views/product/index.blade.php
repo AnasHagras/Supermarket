@@ -104,7 +104,20 @@
                         priceTD.innerHTML = product['sellingPrice'];
                         stockTD.innerHTML = product['stock'];
                         actionTD = document.createElement("td")
-
+                        actionTD.innerHTML = `
+                        <label class="badge badge-success show"><a href="">Show</a></label>
+                        <label class="badge badge-warning edit"><a href="">Edit</a></label>
+                        <form class="delete" action="" method="POST" style="display:inline">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
+                        </form>`;
+                        $editLink = actionTD.querySelector(".edit a");
+                        $deleteLink = actionTD.querySelector(".delete");
+                        $showLink = actionTD.querySelector(".show a");
+                        $showLink.setAttribute("href",`http://localhost:8000/product/${product['barcode']}`);
+                        $editLink.setAttribute("href",`http://localhost:8000/product/${product['barcode']}/edit`);
+                        $deleteLink.setAttribute("action",`http://localhost:8000/product/${product['barcode']}`);
                         tr.appendChild(barcodTD);
                         tr.appendChild(productNameTD);
                         tr.appendChild(priceTD);
