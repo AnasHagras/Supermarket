@@ -52,7 +52,7 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->newPassword),
+            'password' => Hash::make($request->password),
             'isAdmin' => $request->isAdmin,
             'employeeID' => $request->employeeID
         ]);
@@ -100,12 +100,12 @@ class UserController extends Controller
             return back()->withErrors($validator)->withInput();
 
         $user = User::where('userID', $id)->first();
-        
+
         $user->update([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->newPassword),
+            'password' => Hash::make($request->password),
             'isAdmin' => $request->isAdmin,
             'employeeID' => $request->employeeID
         ]);

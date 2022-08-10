@@ -22,7 +22,7 @@
                                 <div
                                     class="d-flex d-sm-block d-md-flex align-items-center"
                                 >
-                                    <h2 @if($incoming-$outgoing < 0) style="color: red" @endif class="mb-0">{{$incoming-$outgoing}} EGP</h2>
+                                    <h2  @if($incoming-$outgoing < 0) style="color: red" @else style="color: green"  @endif class="mb-0">{{$incoming-$outgoing}} EGP</h2>
 
                                 </div>
                                 <h6 class="text-muted font-weight-normal">
