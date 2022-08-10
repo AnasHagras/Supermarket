@@ -16,7 +16,7 @@ class IncomingController extends Controller
      */
     public function index()
     {
-        $data = Incoming::all();
+        $data = Incoming::orderBy('date','DESC')->get();
         return view("incoming.index", ['data' => $data]);
     }
 
@@ -61,7 +61,7 @@ class IncomingController extends Controller
     public function show($id)
     {
         $data = Incoming::where('incomingID', $id)->first();
-        $username = User::where('userID', $data['userID'])->first()['username'];
+        $username = User::where('userID', $data['userID'])->first()['name'];
         return view("incoming.show",['username' => $username, 'data' => $data]);
     }
 

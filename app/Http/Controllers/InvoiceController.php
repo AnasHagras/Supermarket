@@ -50,6 +50,15 @@ class InvoiceController extends Controller
         if ($itemCount == 0) {
             return response()->json(['msg' => "Empty Invoice", 'status' => 201]);
         }
+        // check stock for each item if one of item stock is less than item count return with message 
+        foreach($products as $product){
+            $currentStock = Product::where('barcode',$product['barcode'])->first()['stock'];
+            if($currentStock < $product['count']){
+                $name = $product['productName'];
+                $barcode = $product['barcode'];
+                return response()->json(['msg' =>"Only $currentStock items is Available for $name <a href = 'product/$barcode/edit'> Edit Product</a>", 'status' => 201]);
+            }
+        }
         $invoiceID = Invoice::create([
             'invoicePrice' => $totalPrice,
             'itemCounter' => $itemCount,

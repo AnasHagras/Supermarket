@@ -8,7 +8,7 @@
     }
 
     a:hover {
-        color: white;
+        color: green !important;
     }
 </style>
 <div class="main-panel">
@@ -36,12 +36,24 @@
                                         <td>{{$data->desc??""}}</td>
                                     </tr>
                                     <tr>
+                                        <th>Date</th>
+                                        <td>{{$data->date??""}}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Reason</th>
                                         <td>{{$data->reason??""}}</td>
                                     </tr>
                                     <tr>
                                         <th>User</th>
-                                        <td>{{$username??""}}</td>
+                                        <td><a href="{{route('user.show',$data['userID'])}}">{{$username??""}}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Invoice</th>
+                                        @if($data['invoiceID'])
+                                            <td><a href="{{route('invoice.show',$data['invoiceID'])}}">{{$data['invoiceID']}}</a></td>
+                                        @else
+                                            <td>Not Available</td>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>

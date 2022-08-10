@@ -40,7 +40,6 @@
                                         <td>{{$incoming->desc}}</td>
                                         <td>
                                             <label class="badge badge-success"><a href="{{ route('incoming.show',$incoming->incomingID) }}">Show</a></label>
-                                            <label class="btn btn-primary"><a href="{{ route('incoming.edit',$incoming->incomingID) }}">Edit</a></label>
                                             <form action= "{{route('incoming.destroy',$incoming->incomingID)}}" method="POST" style="display:inline">
                                                 @csrf
                                                 @method("DELETE")

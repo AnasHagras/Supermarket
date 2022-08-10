@@ -7,9 +7,9 @@
         text-decoration: none;
         color: black;
     }
-    
+
     a:hover {
-        color: white;
+        color: green !important;
     }
 
     .removeButton:hover {
@@ -34,9 +34,7 @@
 
                     <div class="card-body">
                         <div class="alert alert-success msg" style="display: none;"></div>
-                        <!-- @if (Session::has('msg'))
-                        @endif -->
-                        <form style="display: flex;" method="POST" action="{{route('user.store')}}" class="cashierForm" autocomplete='off'>
+                        <form style="display: flex;" method="POST" action="" class="cashierForm" autocomplete='off'>
                             @csrf
                             <div class="form-group" style="margin-right:10px">
                                 <input type="text" class="form-control" name="barcode" id="name" placeholder="barcode" style="margin-right:10px !important">
@@ -47,6 +45,9 @@
                             <button type="submit" value="save" name="save" class="btn btn-primary me-2" style="padding: 10px !important; height:fit-content">Add</button>
                         </form>
                         <div class="table-responsive">
+                            <?php
+
+                            ?>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -59,6 +60,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(Session::has('invoiceItems'))
+                                    @foreach(Session::get('invoiceItems') as $product)
+                                    <tr>
+                                        <td name="barcode" value="{{$product['barcode']}}">{{$product['barcode']}}</td>
+                                        <td name='productName' value="{{$product['productName']}}">{{$product['productName']}}</td>
+                                        <td name="price" value="{{$product['sellingPrice']}}">{{$product['sellingPrice']}}</td>
+                                        <td name="count" value="{{$product['count']}}">{{$product['count']}}</td>
+                                        <td name="total" value="{{$product['itemTotalPrice']}}">{{$product['itemTotalPrice']}}</td>
+                                        <td class="removeButton" value="{{$product['barcode']}}">Remove</td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -80,11 +93,17 @@
     </div>
 </div>
 <script>
-    const cashForm = document.querySelector(".cashierForm");
-    const tbody = document.querySelector("table tbody");
-    const totalSpan = document.querySelector("#totalSpan");
-    const cc = document.querySelector("#itemCount");
-    const cash = document.querySelector("#cash");
+    let cashForm = document.querySelector(".cashierForm");
+    let tbody = document.querySelector("table tbody");
+    let totalSpan = document.querySelector("#totalSpan");
+    let cc = document.querySelector("#itemCount");
+    let cash = document.querySelector("#cash");
+    updateAll();
+    [...document.querySelectorAll(".removeButton")].forEach(function($btn) {
+        $btn.addEventListener('click', function(e) {
+            removeFromTable($btn.getAttribute("value"));
+        })
+    });
     cash.addEventListener('click', function() {
         // let currentPrice = $("input[name=price]").val();
         let _token = $('meta[name="csrf-token"]').attr('content');
@@ -107,11 +126,26 @@
                     document.querySelector("input[name=barcode]").value = "";
                     document.querySelector("input[name=count]").value = "";
                     showSuccessMessage(response['msg']);
+                    $.ajax({
+                        url: "/ajaxRequest",
+                        type: "POST",
+                        data: {
+                            type: 2,
+                            _token: _token
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
                 } else {
                     showErrorMessage(response['msg']);
                 }
             },
             error: function(error) {
+                // console.log(error);
                 showErrorMessage("Internal Error!");
 
             }
@@ -131,6 +165,7 @@
             data: {
                 barcode: barcode,
                 count: count,
+                type: 0,
                 _token: _token
             },
             success: function(response) {
@@ -141,6 +176,7 @@
                     } else {
                         updateItem(barcode, initialCount, product['sellingPrice']);
                     }
+                    sendUpdateSessionRequest();
                     updateAll();
                     removeMessage();
                 } else {
@@ -149,12 +185,31 @@
                 }
             },
             error: function(error) {
+                showErrorMessage(error);
                 // handle errors here
             }
         });
     });
-    
-    function removeMessage(){
+
+    function sendUpdateSessionRequest() {
+        $.ajax({
+            url: "/ajaxRequest", // send request to product 
+            type: "POST",
+            data: {
+                toBeSaved: convertTrToArray(),
+                type: 1,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function removeMessage() {
         document.querySelector(".msg").innerHTML = "";
         document.querySelector(".msg").classList.remove("active");
     }
@@ -199,9 +254,6 @@
         removeTD.innerText = "Remove";
         removeTD.setAttribute("value", product['barcode']);
         removeTD.classList.add("removeButton");
-        removeTD.addEventListener('click', function(e) {
-            removeFromTable(this.getAttribute("value"));
-        });
         tr.appendChild(barcodeTD);
         tr.appendChild(productNameTD);
         tr.appendChild(priceTD);
@@ -297,6 +349,7 @@
         barcodee = barcode.toString();
         tbody.removeChild(tbody.querySelector(`tr td[value="${barcodee}"]`).parentElement);
         updateAll();
+        sendUpdateSessionRequest();
     }
 </script>
 @endsection

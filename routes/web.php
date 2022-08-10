@@ -49,6 +49,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('incoming', IncomingController::class);
     Route::resource('outgoing', OutgoingController::class);
     Route::post('ajaxRequest', [AjaxController::class, 'getProduct']);
+    // Route::put('ajaxRequest', [AjaxController::class, 'saveInvoiceItemToSession']);
 });
 
 require __DIR__ . '/auth.php';

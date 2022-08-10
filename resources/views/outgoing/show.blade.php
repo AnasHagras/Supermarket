@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('content')
 <style>
@@ -8,7 +7,7 @@
     }
 
     a:hover {
-        color: white;
+        color: green !important;
     }
 </style>
 <div class="main-panel">
@@ -20,8 +19,8 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div  class="table-responsive">
-                            <table  class="table">
+                        <div class="table-responsive">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>incoming ID</th>
@@ -36,12 +35,24 @@
                                         <td>{{$data->desc??""}}</td>
                                     </tr>
                                     <tr>
+                                        <th>Date</th>
+                                        <td>{{$data->date??""}}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Reason</th>
                                         <td>{{$data->reason??""}}</td>
                                     </tr>
                                     <tr>
                                         <th>User</th>
-                                        <td>{{$username??""}}</td>
+                                        <td><a href="{{route('user.show',$data['userID'])}}">{{$username??""}}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Receipt</th>
+                                        @if($data['receiptID'])
+                                            <td><a href="{{route('receipt.show',$data['receiptID'])}}">{{$data['receiptID']}}</a></td>
+                                        @else
+                                            <td>Not Available</td>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>

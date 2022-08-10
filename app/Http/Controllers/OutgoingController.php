@@ -16,7 +16,7 @@ class OutgoingController extends Controller
      */
     public function index()
     {
-        $data = Outgoing::all();
+        $data = Outgoing::orderBy('date','DESC')->get();
         return view("outgoing.index", ['data' => $data]);
     }
 
@@ -61,7 +61,7 @@ class OutgoingController extends Controller
     public function show($id)
     {
         $data = Outgoing::where('outgoingID', $id)->first();
-        $username = User::where('userID', $data['userID'])->first()['username'];
+        $username = User::where('userID', $data['userID'])->first()['name'];
         return view("outgoing.show", ['username' => $username, 'data' => $data]);
     }
 
