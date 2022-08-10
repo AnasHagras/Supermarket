@@ -60,6 +60,9 @@ class ReceiptController extends Controller
             $currentProduct = Product::where('barcode',$product['barcode'])->first();
             if(null==$currentProduct)
                 return response()->json(['msg' =>"Product $product[barcode] not available <a href = 'product/create' target='_blank'> Add Product</a>", 'status' => 201]);
+            if($currentProduct['companyID']!=$companyID){
+                return response()->json(['msg' =>"Product $product[productName] not owned by that company <a target='_blank' href = '/product/$product[barcode]/edit'> Edit Product</a>", 'status' => 201]);
+            }
         }
         $receiptID = Receipt::create([
             'receiptPrice' => $totalPrice,

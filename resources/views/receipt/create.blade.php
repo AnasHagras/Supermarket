@@ -262,7 +262,7 @@
         countTD.setAttribute("name", "count");
         countTD.setAttribute("value", count);
         totalTD.setAttribute("name", "total");
-        totalTD.setAttribute("value", product['sellingPrice'] * count);
+        totalTD.setAttribute("value", product['purcashingPrice'] * count);
         barcodeTD.innerText = product['barcode'];
         productNameTD.innerText = product['productName'];
         sellingPrice.innerText = product['sellingPrice'];
@@ -272,6 +272,9 @@
         removeTD.innerText = "Remove";
         removeTD.setAttribute("value", product['barcode']);
         removeTD.classList.add("removeButton");
+        removeTD.addEventListener('click', function(e) {
+            removeFromTable(this.getAttribute("value"));
+        });
         tr.appendChild(barcodeTD);
         tr.appendChild(productNameTD);
         tr.appendChild(sellingPrice);
@@ -296,7 +299,7 @@
                 'barcode': $barcode,
                 'productName': $productName,
                 'sellingPrice': $sellingPrice,
-                'purcashingPrice':$purcashingPrice,
+                'purcashingPrice': $purcashingPrice,
                 'count': $count,
                 'itemTotalPrice': $total
             }
