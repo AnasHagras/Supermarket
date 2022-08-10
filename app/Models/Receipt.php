@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Receipt extends Model
 {
     use HasFactory;
-    protected $primayKey = "receiptID";
+    protected $primaryKey = "receiptID";
     protected $guarded = [];
 }

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('product_receipt_companies', function (Blueprint $table) {
             $table->integer('itemCounter');
+            $table->double('itemTotalPrice',8,2);
             $table->timestamps();
         });
     }

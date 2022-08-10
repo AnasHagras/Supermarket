@@ -45,9 +45,6 @@
                             <button type="submit" value="save" name="save" class="btn btn-primary me-2" style="padding: 10px !important; height:fit-content">Add</button>
                         </form>
                         <div class="table-responsive">
-                            <?php
-
-                            ?>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -76,8 +73,8 @@
                             </table>
                         </div>
                         <div class="row" style="margin-top: 20px;">
-                            <div>Total Price : <span id="totalSpan"></span></div>
                             <div>Item Count : <span id="itemCount"></span></div>
+                            <div>Total Price : <span id="totalSpan"></span></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-2 grid-margin stretch-card" style="margin-top: 20px;">

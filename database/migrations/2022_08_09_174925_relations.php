@@ -30,6 +30,8 @@ return new class extends Migration
         Schema::table('receipts',function (Blueprint $table){
             $table->unsignedBigInteger('userID');
             $table->foreign('userID')->references('userID')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('companyID');
+            $table->foreign('companyID')->references('companyID')->on('companies')->onUpdate('cascade')->onDelete('cascade');
         });
         Schema::table('invoice_products',function (Blueprint $table){
             $table->unsignedBigInteger('invoiceID');
