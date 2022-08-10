@@ -73,7 +73,7 @@
                                         <th>Count</th>
                                         <th>Unit Price</th>
                                         <th>Total Price</th>
-                                        <th>{{Session::get('key')}}</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
