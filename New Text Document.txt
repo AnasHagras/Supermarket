@@ -1,0 +1,8 @@
+                        // actionTD.innerHTML = `
+                        // <label class="badge badge-success"><a href="{{ route('employee.show',$employee->employeeID) }}">Show</a></label>
+                        // <label class="btn btn-primary"><a href="{{ route('employee.edit',$employee->employeeID) }}">Edit</a></label>
+                        // <form action="{{route('employee.destroy',$employee->employeeID)}}" method="POST" style="display:inline">
+                        // @csrf
+                        // @method("DELETE")
+                        // <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
+                        // </form>`;

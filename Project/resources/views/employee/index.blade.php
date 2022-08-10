@@ -25,7 +25,7 @@
                         <form style="display: flex;" method="POST" action="" class="searchForm" autocomplete='off'>
                             @csrf
                             <div class="form-group" style="margin-right:10px">
-                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Search Text" style="margin-right:10px !important">
+                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Employee Name" style="margin-right:10px !important">
                             </div>
                             <button type="submit" value="save" name="save" class="submitButton btn btn-primary me-2" style="padding: 10px !important; height:fit-content">Search</button>
                         </form>
@@ -100,18 +100,11 @@
                         firstNameTD.innerHTML = employee['firstName'];
                         lastNameTD.innerHTML = employee['lastName'];
                         IDTD.innerHTML = employee['employeeID'];
-                        actionTD.innerHTML = `
-                        <label class="badge badge-success"><a href="{{ route('employee.show',$employee->employeeID) }}">Show</a></label>
-                        <label class="btn btn-primary"><a href="{{ route('employee.edit',$employee->employeeID) }}">Edit</a></label>
-                        <form action="{{route('employee.destroy',$employee->employeeID)}}" method="POST" style="display:inline">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit" style='padding:6px' class="btn btn-danger btn-sm">Delete</button>
-                        </form>`;
+
                         tr.appendChild(IDTD);
                         tr.appendChild(firstNameTD);
                         tr.appendChild(lastNameTD);
-                        tr.appendChild(actionTD);
+                        //tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });
                 } else {
