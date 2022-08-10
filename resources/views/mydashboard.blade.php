@@ -26,9 +26,7 @@
 
                                 </div>
                                 <h6 class="text-muted font-weight-normal">
-                                    @if($incoming-$outgoing < 0)
-                                        you have some losses
-                                    @endif
+
                                 </h6>
                             </div>
                             <div

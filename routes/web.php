@@ -37,6 +37,7 @@ Route::get('/', function () {
 
 Route::resource('cashier', CashierController::class)->middleware(['auth']);
 Route::resource('dashboard', DashboardController::class)->middleware(['auth']);
+Route::resource('receipt', ReceiptController::class)->middleware(['auth']);
 Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('catagory', CatagoryController::class);
@@ -45,7 +46,7 @@ Route::middleware(['auth', 'access'])->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('product_receipt_company', ProductReceiptCompanyController::class);
     Route::resource('invoice_product', InvoiceController::class);
-    Route::resource('receipt', ReceiptController::class);
+
     Route::resource('user', UserController::class);
     Route::resource('incoming', IncomingController::class);
     Route::resource('outgoing', OutgoingController::class);
