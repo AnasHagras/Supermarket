@@ -251,6 +251,9 @@
         removeTD.innerText = "Remove";
         removeTD.setAttribute("value", product['barcode']);
         removeTD.classList.add("removeButton");
+        removeTD.addEventListener('click', function(e) {
+            removeFromTable(this.getAttribute("value"));
+        });
         tr.appendChild(barcodeTD);
         tr.appendChild(productNameTD);
         tr.appendChild(priceTD);
