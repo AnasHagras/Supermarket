@@ -34,7 +34,7 @@ class ReceiptController extends Controller
      */
     public function index()
     {
-        $data = Receipt::all();
+        $data = Receipt::orderBy('receiptDate',"DESC")->get();
         return view('receipt.index', ['data' => $data]);
     }
 
