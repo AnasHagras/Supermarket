@@ -25,7 +25,7 @@
                         <form style="display: flex;" method="POST" action="" class="searchForm" autocomplete='off'>
                             @csrf
                             <div class="form-group" style="margin-right:10px">
-                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Search Text" style="margin-right:10px !important">
+                                <input type="text" class="form-control searchText" name="searchText" id="name" placeholder="Employee Name" style="margin-right:10px !important">
                             </div>
                             <button type="submit" value="save" name="save" class="submitButton btn btn-primary me-2" style="padding: 10px !important; height:fit-content">Search</button>
                         </form>
@@ -116,7 +116,7 @@
                         tr.appendChild(IDTD);
                         tr.appendChild(firstNameTD);
                         tr.appendChild(lastNameTD);
-                        tr.appendChild(actionTD);
+                        //tr.appendChild(actionTD);
                         document.querySelector("tbody").appendChild(tr);
                     });
                 } else {
