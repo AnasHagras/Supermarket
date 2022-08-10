@@ -20,6 +20,6 @@ class EnsureAccessibility
         if (Auth::user()->isAdmin) {
             return $next($request);
         } else
-            return redirect()->route('dashboard')->with('msg', 'Only admins can access this page');
+            return redirect()->route('dashboard.index')->with('msg', 'Only admins can access this page');
     }
 }
