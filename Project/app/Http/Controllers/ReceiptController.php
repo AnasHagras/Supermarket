@@ -21,7 +21,6 @@ class ReceiptController extends Controller
         $this->middleware('access', [
             'only' => [
                 'update',
-                'store',
                 'edit',
                 'destroy'
             ]

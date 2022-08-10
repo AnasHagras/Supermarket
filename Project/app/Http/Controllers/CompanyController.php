@@ -14,7 +14,6 @@ class CompanyController extends Controller
         $this->middleware('access', [
             'only' => [
                 'update',
-                'store',
                 'edit',
                 'destroy'
             ]
