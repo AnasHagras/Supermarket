@@ -1,0 +1,14 @@
+To login as Admin:
+username: admin
+password: 123456789
+===================
+to login as cashier
+username: user
+password: 123456789
+===================
+database name : 
+'finalproject'
+
+you will find databse file on:
+__DATABASE__  => finalproject.sql
+
